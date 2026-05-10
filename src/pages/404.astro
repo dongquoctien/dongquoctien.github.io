@@ -1,0 +1,18 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Not found" description="That page doesn't exist.">
+  <div class="py-16 text-center">
+    <p class="font-mono text-sm text-muted">404</p>
+    <h1 class="mt-4 text-3xl font-bold tracking-tight">This page wandered off.</h1>
+    <p class="mt-3 text-muted">
+      The link might be old or the page might have moved. Try the homepage.
+    </p>
+    <div class="mt-6">
+      <a class="rounded-md bg-fg px-4 py-2 text-sm font-medium text-bg hover:opacity-90" href="/">
+        Take me home
+      </a>
+    </div>
+  </div>
+</BaseLayout>

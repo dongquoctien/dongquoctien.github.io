@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  limit?: number;
+}
+
+const { limit } = Astro.props;
+const all = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const posts = limit ? all.slice(0, limit) : all;
+const fmt = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+{posts.length === 0 ? (
+  <p class="text-sm text-muted">No posts yet — drafts cooking.</p>
+) : (
+  <ul class="divide-y divide-border">
+    {posts.map((post) => (
+      <li class="py-3">
+        <a href={`/blog/${post.slug}/`} class="group flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+          <span class="font-medium group-hover:text-accent">{post.data.title}</span>
+          <time class="text-xs text-muted" datetime={post.data.pubDate.toISOString()}>
+            {fmt.format(post.data.pubDate)}
+          </time>
+        </a>
+        {post.data.description && (
+          <p class="mt-1 text-sm text-muted">{post.data.description}</p>
+        )}
+      </li>
+    ))}
+  </ul>
+)}
