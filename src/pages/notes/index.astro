@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const fmt = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<BaseLayout
+  title="Notes"
+  description="Short-form developer notes — cheat-sheets, snippets, gotchas, things I want to remember next time."
+>
+  <header class="mb-10">
+    <h1 class="text-3xl font-bold tracking-tight">Notes</h1>
+    <p class="mt-2 text-muted">
+      Short-form. One problem, one solution, no fluff. For longer write-ups, see <a class="link" href="/blog/">blog</a>.
+    </p>
+  </header>
+
+  {notes.length === 0 ? (
+    <p class="text-muted">No notes yet.</p>
+  ) : (
+    <ul class="divide-y divide-border">
+      {notes.map((note) => (
+        <li class="py-4">
+          <a href={`/notes/${note.slug}/`} class="group block">
+            <div class="flex items-baseline justify-between gap-3">
+              <h2 class="font-medium group-hover:text-accent">{note.data.title}</h2>
+              <time class="text-xs text-muted" datetime={note.data.pubDate.toISOString()}>
+                {fmt.format(note.data.pubDate)}
+              </time>
+            </div>
+            {note.data.tags.length > 0 && (
+              <ul class="mt-2 flex flex-wrap gap-1.5">
+                {note.data.tags.map((t) => <li class="badge">#{t}</li>)}
+              </ul>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>

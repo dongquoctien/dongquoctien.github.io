@@ -1,0 +1,43 @@
+---
+import '@/styles/global.css';
+import SEO from '@/components/SEO.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
+  publishedTime?: Date;
+  tags?: readonly string[];
+  wide?: boolean;
+}
+
+const { wide = false, ...seo } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <SEO {...seo} />
+    <script is:inline>
+      (() => {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = stored ? stored === 'dark' : prefersDark;
+        document.documentElement.classList.toggle('dark', isDark);
+      })();
+    </script>
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <Header />
+    <main class:list={['flex-1 py-12', wide ? 'container-wide' : 'container-prose']}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

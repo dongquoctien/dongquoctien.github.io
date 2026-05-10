@@ -1,0 +1,15 @@
+---
+import { SITE } from '@/consts';
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-border">
+  <div class="container-wide flex flex-col gap-3 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+    <p>© {year} {SITE.author}. Built with Astro.</p>
+    <div class="flex items-center gap-4">
+      <a class="hover:text-fg" href={SITE.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="hover:text-fg" href={`mailto:${SITE.email}`}>Email</a>
+      <a class="hover:text-fg" href="/rss.xml">RSS</a>
+    </div>
+  </div>
+</footer>

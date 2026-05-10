@@ -1,0 +1,36 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { projects, TIER_LABELS, TIER_ORDER } from '@/data/projects';
+---
+
+<BaseLayout
+  wide
+  title="Projects"
+  description="Selected projects: MCP servers, AI tooling, web apps, browser extensions, and embedded experiments."
+>
+  <header class="mb-10">
+    <h1 class="text-3xl font-bold tracking-tight">Projects</h1>
+    <p class="mt-2 text-muted">
+      A curated slice of what I build. The full list lives on
+      <a class="link" href="https://github.com/dongquoctien" target="_blank" rel="noopener noreferrer">GitHub</a>.
+    </p>
+  </header>
+
+  {
+    TIER_ORDER.map((tier) => {
+      const list = projects.filter((p) => p.tier === tier);
+      if (list.length === 0) return null;
+      return (
+        <section class="mb-12">
+          <h2 class="mb-5 text-sm font-semibold uppercase tracking-widest text-muted">
+            {TIER_LABELS[tier]}
+          </h2>
+          <div class="grid gap-4 sm:grid-cols-2">
+            {list.map((project) => <ProjectCard project={project} />)}
+          </div>
+        </section>
+      );
+    })
+  }
+</BaseLayout>

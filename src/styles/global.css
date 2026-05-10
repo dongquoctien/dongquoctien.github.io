@@ -1,0 +1,74 @@
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: 252 252 252;
+    --color-fg: 18 20 24;
+    --color-muted: 100 108 120;
+    --color-accent: 14 165 153;
+    --color-border: 226 230 235;
+    --color-card: 255 255 255;
+  }
+
+  :root.dark {
+    --color-bg: 12 14 18;
+    --color-fg: 232 234 238;
+    --color-muted: 138 146 158;
+    --color-accent: 56 207 188;
+    --color-border: 32 36 44;
+    --color-card: 18 21 27;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  ::selection {
+    @apply bg-accent/25 text-fg;
+  }
+
+  a {
+    @apply transition-colors;
+  }
+
+  code {
+    @apply font-mono text-[0.92em];
+  }
+
+  /* Shiki dark/light auto-switch */
+  html.dark .astro-code,
+  html.dark .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+}
+
+@layer components {
+  .container-prose {
+    @apply mx-auto w-full max-w-2xl px-5;
+  }
+  .container-wide {
+    @apply mx-auto w-full max-w-5xl px-5;
+  }
+  .link {
+    @apply text-fg underline decoration-border underline-offset-4 hover:decoration-accent;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-md border border-border bg-card px-2 py-0.5 text-xs text-muted;
+  }
+}

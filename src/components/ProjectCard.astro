@@ -1,0 +1,41 @@
+---
+import type { Project } from '@/data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const primary = project.links.demo ?? project.links.repo;
+---
+
+<article class="group rounded-lg border border-border bg-card p-5 transition-colors hover:border-accent/50">
+  <div class="flex items-start justify-between gap-3">
+    <h3 class="font-semibold tracking-tight">
+      {primary ? (
+        <a href={primary} target="_blank" rel="noopener noreferrer" class="hover:text-accent">
+          {project.title}
+        </a>
+      ) : (
+        project.title
+      )}
+    </h3>
+    <span class="text-xs text-muted">{project.year}</span>
+  </div>
+  <p class="mt-2 text-sm text-muted">{project.description}</p>
+  <div class="mt-4 flex flex-wrap items-center gap-1.5">
+    {project.stack.map((tag) => <span class="badge">{tag}</span>)}
+  </div>
+  <div class="mt-4 flex gap-3 text-xs text-muted">
+    {project.links.repo && (
+      <a class="hover:text-fg" href={project.links.repo} target="_blank" rel="noopener noreferrer">
+        ↗ Repo
+      </a>
+    )}
+    {project.links.demo && (
+      <a class="hover:text-fg" href={project.links.demo} target="_blank" rel="noopener noreferrer">
+        ↗ Live
+      </a>
+    )}
+  </div>
+</article>

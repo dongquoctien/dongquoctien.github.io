@@ -1,0 +1,91 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/consts';
+
+const skills: { group: string; items: string[] }[] = [
+  { group: 'Frontend', items: ['TypeScript', 'Angular', 'React', 'Astro', 'Tailwind CSS'] },
+  { group: 'Backend', items: ['.NET / C#', 'Java Spring Boot', 'Node.js', 'Python'] },
+  { group: 'AI tooling', items: ['Model Context Protocol (MCP)', 'LLM integration', 'Prompt engineering', 'Agent workflows'] },
+  { group: 'Mobile', items: ['Flutter', 'Clean Architecture', 'BLoC / GetX'] },
+  { group: 'Data', items: ['MySQL', 'Elasticsearch', 'MyBatis', 'JPA'] },
+  { group: 'DevOps & misc', items: ['Bitbucket Pipelines', 'GitHub Actions', 'n8n automation', 'ESP32 / Embedded'] },
+];
+
+const timeline: { period: string; title: string; body: string }[] = [
+  {
+    period: '2024 — Present',
+    title: 'Full-stack & AI tooling',
+    body: 'Building MCP servers that connect LLMs to enterprise systems (Microsoft 365, Teams, Bitbucket, Grafana, Redmine, MySQL). Shipping products like ChatLingua, Loto, QA Annotator, and HomNayAnGi.',
+  },
+  {
+    period: '2022 — 2024',
+    title: 'Web & desktop applications',
+    body: 'Worked across Angular and .NET stacks. Authored a published VS Code extension (HTML inline-style conversion) and contributed to Spring Boot + MyBatis services.',
+  },
+  {
+    period: '2021 — 2022',
+    title: 'Started open source on GitHub',
+    body: 'Began publishing experiments — winforms, embedded, dictionary tooling, web crawlers. Treated GitHub as a public lab notebook.',
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="About dongquoctien — a full-stack developer in Vietnam working on web apps, MCP servers, and AI tooling."
+>
+  <h1 class="text-3xl font-bold tracking-tight">About</h1>
+  <p class="mt-4 text-muted">
+    I'm dongquoctien — a full-stack developer based in {SITE.location}. I enjoy products that respect the
+    user's time, systems that age gracefully, and tools that make the boring parts of software
+    delightful. Most of what I publish here is open source.
+  </p>
+  <p class="mt-3 text-muted">
+    Lately I spend a lot of time at the seam between AI agents and existing software — building
+    Model Context Protocol servers so language models can do real work in the systems people
+    already rely on.
+  </p>
+
+  <section class="mt-12">
+    <h2 class="text-xl font-semibold tracking-tight">Skills</h2>
+    <div class="mt-5 grid gap-5 sm:grid-cols-2">
+      {
+        skills.map((s) => (
+          <div class="rounded-lg border border-border bg-card p-4">
+            <h3 class="text-sm font-semibold uppercase tracking-widest text-muted">{s.group}</h3>
+            <ul class="mt-2 flex flex-wrap gap-1.5">
+              {s.items.map((item) => <li class="badge">{item}</li>)}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="text-xl font-semibold tracking-tight">Timeline</h2>
+    <ol class="mt-5 space-y-6 border-l border-border pl-6">
+      {
+        timeline.map((entry) => (
+          <li class="relative">
+            <span class="absolute -left-[29px] top-1.5 inline-block h-2.5 w-2.5 rounded-full bg-accent" />
+            <p class="text-xs uppercase tracking-widest text-muted">{entry.period}</p>
+            <h3 class="mt-1 font-semibold">{entry.title}</h3>
+            <p class="mt-1 text-sm text-muted">{entry.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="text-xl font-semibold tracking-tight">Get in touch</h2>
+    <p class="mt-3 text-muted">
+      Best way to reach me is email — I read everything, even if I don't always reply quickly.
+    </p>
+    <ul class="mt-4 space-y-1 text-sm">
+      <li>Email · <a class="link" href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      <li>GitHub · <a class="link" href={SITE.github} target="_blank" rel="noopener noreferrer">@dongquoctien</a></li>
+    </ul>
+  </section>
+</BaseLayout>
